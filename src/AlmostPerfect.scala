@@ -1,6 +1,7 @@
 /**
   * Created by Tobias Bladh on 2017-09-27.
   */
+import scala.collection.mutable
 import scala.io.StdIn
 
 object AlmostPerfect {
@@ -11,16 +12,13 @@ object AlmostPerfect {
       if (s == null) cont = false
       else {
         val n = s.toLong
-        println("find: " + findDivs(1,n))
-        println("proper: " + properDivs(n))
-        println("primes: " + AnIndustrialSpy.calcPrimes(math.sqrt(n).toInt).toVector.sorted)
         println(n + " " + determine(n))
       }
     }
   }
 
   def determine(n: Long): String = {
-    val divs = properDivs(n)
+    val divs = findDivs(n)
     val sum = divs.sum
     if (sum < n - 2 || sum > n + 2) "not perfect"
     else if (sum == n) "perfect"
@@ -29,14 +27,21 @@ object AlmostPerfect {
   //Too slow!!
   def properDivs(n: Long): Seq[Long] = for (i <- 1L to n / 2 if n % i == 0) yield i
 
-  def findDivs(start: Long = 1, end: Long) : Seq[Long] = {
-    if (start >= end) Seq.empty[Long]
-    else {
-      var i = start
-      while (i < end && end % i != 0) {
-        i += 1
+  def findDivs(n: Long) : Set[Long] = {
+    val nums: mutable.Set[Long] = mutable.Set(1)
+    var i = 2
+    var cont = true
+    val limit = n / 2
+    while(i < limit && cont) {
+      if (n % i == 0) {
+        if (nums.contains(i)) cont = false
+        else {
+          nums.add(i)
+          nums.add(n / i)
+        }
       }
-      i +: findDivs(i + 1, end)
+      i += 1
     }
+    nums.toSet
   }
 }
