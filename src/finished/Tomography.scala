@@ -1,8 +1,10 @@
+package finished
+
 /**
   * Created by Tobias Bladh on 2017-10-04.
   */
+import scala.collection.mutable
 import scala.io.StdIn.readLine
-import collection.mutable
 
 object Tomography {
   //Så länge det finns radnummer kvar (ev. i längsta sida JAA)
