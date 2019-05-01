@@ -1,5 +1,7 @@
-import scala.io.StdIn
+package finished
+
 import scala.collection.mutable
+import scala.io.StdIn
 
 object FavorableEnding {
   def main(args: Array[String]): Unit = {
